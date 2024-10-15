@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ArticleController {
     @GetMapping("")
     public String showAllArticles() {
+
         return "/articles/show_all";
     }
 
