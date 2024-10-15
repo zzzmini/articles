@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -26,13 +27,16 @@ public class ArticleController {
     }
 
     @GetMapping("new")
-    public String newArticle() {
+    public String newArticle(Model model) {
+        model.addAttribute("dto",
+                new ArticleDTO());
         return "/articles/new";
     }
 
     @PostMapping("create")
-    private String createArticle() {
-        return "redirect:articles";
+    private String createArticle(ArticleDTO dto) {
+        articleService.insertArticle(dto);
+        return "redirect:/articles";
     }
 
     @GetMapping("{id}")
@@ -44,17 +48,26 @@ public class ArticleController {
     }
 
     @GetMapping("{id}/update")
-    public String viewUpdateArticle() {
+    public String viewUpdateArticle(@PathVariable("id")Long id,
+                                    Model model) {
+        model.addAttribute("dto",
+                articleService.getOneArticle(id));
         return "/articles/update";
     }
 
     @PostMapping("update")
-    public String updateArticle() {
-        return "redirect:articles";
+    public String updateArticle(ArticleDTO dto) {
+        String url = "redirect:" + dto.getId();
+        articleService.updateArticle(dto);
+        return url;
     }
 
     @GetMapping("{id}/delete")
-    public String deleteArticle() {
-        return "redirect:articles";
+    public String deleteArticle(@PathVariable("id")Long id,
+                                RedirectAttributes redirectAttributes) {
+        articleService.deleteArticle(id);
+        redirectAttributes.addFlashAttribute("msg",
+                "정상적으로 삭제되었습니다.");
+        return "redirect:/articles";
     }
 }

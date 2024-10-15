@@ -3,9 +3,11 @@ package com.my.articles.dto;
 import com.my.articles.entity.Article;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class ArticleDTO {
     private Long id;
     private String title;
