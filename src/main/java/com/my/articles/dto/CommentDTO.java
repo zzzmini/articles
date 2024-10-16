@@ -3,8 +3,10 @@ package com.my.articles.dto;
 import com.my.articles.entity.Comment;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 public class CommentDTO {
     private Long id;
